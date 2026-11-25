@@ -1,0 +1,35 @@
+created:
+    - database/factories/VenueFactory.php
+    - database/factories/GameFactory.php
+    - database/factories/RegistrationFactory.php
+    - database/factories/RatingFactory.php
+    - database/factories/PostFactory.php
+    - database/factories/CommentFactory.php
+    - database/migrations/2026_11_04_120937_create_venues_table.php
+    - database/migrations/2026_11_04_120938_create_games_table.php
+    - database/migrations/2026_11_04_120939_create_registrations_table.php
+    - database/migrations/2026_11_04_120940_create_ratings_table.php
+    - database/migrations/2026_11_04_120941_create_posts_table.php
+    - database/migrations/2026_11_04_120942_create_comments_table.php
+    - app/Models/Venue.php
+    - app/Models/Game.php
+    - app/Models/Registration.php
+    - app/Models/Rating.php
+    - app/Models/Post.php
+    - app/Models/Comment.php
+models:
+    Category: { name: 'string nullable', user_id: 'id:user' }
+    Post: { user_id: 'id:user', content: text, relationships: { hasMany: Comment } }
+    SportProfile: { user_id: 'id:user unique ondelete:cascade', position: 'enum:goalkeeper,defender,midfielder,forward nullable', secondary_position: 'enum:goalkeeper,defender,midfielder,forward nullable', strong_foot: 'enum:left,right,both nullable', level: 'enum:beginner,intermediate,advanced default:intermediate', favorite_team: 'string nullable', reliability: 'decimal:3,2 default:0', sportsmanship: 'decimal:3,2 default:0' }
+    Venue: { name: string, address: string, city: string, surface: 'enum:artificial,natural,indoor', relationships: { hasMany: Game } }
+    Game: { user_id: 'id:user', venue_id: 'id:venue', date: datetime, max_players: integer, price: 'decimal:6,2 default:0', description: 'text nullable', status: 'enum:open,full,cancelled default:open', relationships: { hasMany: 'Registration, Rating' } }
+    Registration: { user_id: 'id:user', game_id: 'id:game', status: 'enum:confirmed,waitlist default:confirmed', indexes: [{ unique: 'user_id, game_id' }] }
+    Rating: { user_id: 'id:user', rated_id: 'id:user', game_id: 'id:game', score: integer, comment: 'string nullable', relationships: { belongsTo: 'User:rated' } }
+    Establishment: { name: string, address: string, city: 'string index', latitude: 'decimal:10,7', longitude: 'decimal:10,7', promotion: 'string nullable', softdeletes: softdeletes, indexes: [{ index: 'latitude, longitude' }], relationships: { hasMany: Gathering } }
+    Gathering: { organizer_id: 'id:user ondelete:cascade', establishment_id: 'id:establishment nullable', title: string, type: 'enum:bar,stadium', match_description: 'string nullable', starts_at: datetime, max_attendees: 'unsignedSmallInteger nullable', status: 'enum:open,finished,cancelled default:open', indexes: [{ index: 'status, starts_at' }], relationships: { belongsTo: 'User:organizer', belongsToMany: User, hasOne: Chat } }
+    Comment: { user_id: 'id:user', post_id: 'id:post', content: text }
+    Like: { post_id: 'id:post ondelete:cascade', user_id: 'id:user ondelete:cascade', indexes: [{ unique: 'post_id, user_id' }] }
+    Follow: { follower_id: 'id:user ondelete:cascade', followed_id: 'id:user ondelete:cascade', status: 'enum:pending,accepted default:accepted', indexes: [{ unique: 'follower_id, followed_id' }], relationships: { belongsTo: 'User:follower, User:followed' } }
+    Chat: { type: 'enum:private,game,gathering', game_id: 'id:game nullable unique ondelete:cascade', gathering_id: 'id:gathering nullable unique ondelete:cascade', relationships: { hasMany: Message, belongsToMany: User } }
+    Message: { chat_id: 'id:chat ondelete:cascade', user_id: 'id:user ondelete:cascade', body: text, indexes: [{ index: 'chat_id, created_at' }] }
+    Report: { reporter_id: 'id:user ondelete:cascade', reportable: morphs, reason: text, status: 'enum:pending,reviewed,dismissed default:pending', resolver_id: 'id:user nullable', resolved_at: 'timestamp nullable', indexes: [{ index: status }], relationships: { belongsTo: 'User:reporter, User:resolver' } }

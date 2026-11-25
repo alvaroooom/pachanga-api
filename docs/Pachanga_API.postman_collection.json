@@ -1,0 +1,53 @@
+{
+  "info": {"name":"Pachanga API","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+  "auth": {"type":"bearer","bearer":[{"key":"token","value":"{{TOKEN}}"}]},
+  "variable": [{"key":"API_BASE_URL","value":"http://localhost:8000/api"}],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {"name":"Login admin","request":{"method":"POST","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/login","body":{"mode":"raw","raw":"{\"email\":\"admin@email.com\",\"password\":\"12345678\"}","options":{"raw":{"language":"json"}}},"auth":{"type":"noauth"}},"event":[{"listen":"test","script":{"exec":["pm.collectionVariables.set('TOKEN', pm.response.json().token);"]}}]}
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {"name":"Crear usuario","request":{"method":"POST","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/users","body":{"mode":"raw","raw":"{\"name\":\"Nuevo Usuario\",\"email\":\"nuevo@email.com\",\"password\":\"12345678\",\"role\":\"user\"}","options":{"raw":{"language":"json"}}}}},
+        {"name":"Obtener usuario","request":{"method":"GET","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/users/2"}},
+        {"name":"Listar usuarios","request":{"method":"GET","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/users"}},
+        {"name":"Editar usuario","request":{"method":"PUT","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/users/2","body":{"mode":"raw","raw":"{\"name\":\"Usuario Editado\",\"email\":\"editado@email.com\"}","options":{"raw":{"language":"json"}}}}},
+        {"name":"Borrar usuario","request":{"method":"DELETE","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/users/2"}}
+      ]
+    },
+    {
+      "name": "Partidos",
+      "item": [
+        {"name":"Crear partido","request":{"method":"POST","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/games","body":{"mode":"raw","raw":"{\"venue_id\":1,\"date\":\"2030-01-01 18:00:00\",\"max_players\":10,\"price\":3.5,\"description\":\"Partido de prueba\"}","options":{"raw":{"language":"json"}}}}},
+        {"name":"Obtener partido","request":{"method":"GET","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/games/1"}},
+        {"name":"Listar partidos","request":{"method":"GET","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/games"}},
+        {"name":"Editar partido","request":{"method":"PUT","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/games/1","body":{"mode":"raw","raw":"{\"max_players\":12,\"price\":4,\"status\":\"open\"}","options":{"raw":{"language":"json"}}}}},
+        {"name":"Borrar partido","request":{"method":"DELETE","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/games/1"}}
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {"name":"Crear post","request":{"method":"POST","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/posts","body":{"mode":"raw","raw":"{\"content\":\"Texto del post\"}","options":{"raw":{"language":"json"}}}}},
+        {"name":"Obtener post","request":{"method":"GET","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/posts/1"}},
+        {"name":"Listar posts","request":{"method":"GET","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/posts"}},
+        {"name":"Editar post","request":{"method":"PUT","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/posts/1","body":{"mode":"raw","raw":"{\"content\":\"Texto editado\"}","options":{"raw":{"language":"json"}}}}},
+        {"name":"Borrar post","request":{"method":"DELETE","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/posts/1"}}
+      ]
+    },
+    {
+      "name": "Campos",
+      "item": [
+        {"name":"Crear campo","request":{"method":"POST","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/venues","body":{"mode":"raw","raw":"{\"name\":\"Polideportivo\",\"address\":\"Calle Ejemplo 12\",\"city\":\"Sevilla\",\"surface\":\"artificial\"}","options":{"raw":{"language":"json"}}}}},
+        {"name":"Obtener campo","request":{"method":"GET","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/venues/1"}},
+        {"name":"Listar campos","request":{"method":"GET","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/venues"}},
+        {"name":"Editar campo","request":{"method":"PUT","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/venues/1","body":{"mode":"raw","raw":"{\"name\":\"Polideportivo Norte\",\"address\":\"Calle Ejemplo 12\",\"city\":\"Sevilla\",\"surface\":\"indoor\"}","options":{"raw":{"language":"json"}}}}},
+        {"name":"Borrar campo","request":{"method":"DELETE","header":[{"key":"Accept","value":"application/json"}],"url":"{{API_BASE_URL}}/admin/venues/1"}}
+      ]
+    }
+  ]
+}

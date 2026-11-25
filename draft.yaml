@@ -1,0 +1,47 @@
+models:
+
+  Venue:
+    name: string
+    address: string
+    city: string
+    surface: enum:artificial,natural,indoor
+    relationships:
+      hasMany: Game
+
+  Game:
+    user_id: id:user
+    venue_id: id:venue
+    date: datetime
+    max_players: integer
+    price: decimal:6,2 default:0
+    description: text nullable
+    status: enum:open,full,cancelled default:open
+    relationships:
+      hasMany: Registration, Rating
+
+  Registration:
+    user_id: id:user
+    game_id: id:game
+    status: enum:confirmed,waitlist default:confirmed
+    indexes:
+      - unique: user_id, game_id
+
+  Rating:
+    user_id: id:user
+    rated_id: id:user
+    game_id: id:game
+    score: integer
+    comment: string nullable
+    relationships:
+      belongsTo: User:rated
+
+  Post:
+    user_id: id:user
+    content: text
+    relationships:
+      hasMany: Comment
+
+  Comment:
+    user_id: id:user
+    post_id: id:post
+    content: text

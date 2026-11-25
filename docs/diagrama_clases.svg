@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1200" height="760" fill="#ffffff"/>
+  <defs>
+    <style>
+      .hd { fill:#dbeafe; stroke:#1e3a8a; stroke-width:1.5 }
+      .bd { fill:#ffffff; stroke:#1e3a8a; stroke-width:1.5 }
+      .cn { font-size:15px; font-weight:600; fill:#1e3a8a; text-anchor:middle }
+      .at { font-family:Consolas, 'Courier New', monospace; font-size:12px; fill:#111827 }
+      .ln { stroke:#374151; stroke-width:1.4; fill:none }
+      .m  { font-size:13px; font-weight:600; fill:#111827 }
+      .r  { font-size:11px; font-style:italic; fill:#4b5563; text-anchor:middle }
+      .lg { font-size:12px; fill:#374151 }
+    </style>
+  </defs>
+
+  <text x="600" y="24" text-anchor="middle" font-size="17" font-weight="600" fill="#111827">Pachanga - Diagrama de clases del modelo de dominio</text>
+
+  <!-- ===== Asociaciones (se dibujan primero, debajo de las cajas) ===== -->
+  <!-- Venue 1 - * Game -->
+  <path class="ln" d="M350 110 H450"/>
+  <text class="m" x="354" y="104">1</text><text class="m" x="436" y="104">*</text>
+  <text class="r" x="400" y="128">alberga</text>
+
+  <!-- Game 1 - * Registration -->
+  <path class="ln" d="M740 100 H880"/>
+  <text class="m" x="746" y="94">1</text><text class="m" x="866" y="94">*</text>
+  <text class="r" x="810" y="118">tiene</text>
+
+  <!-- User 1 - * Game (organiza) -->
+  <path class="ln" d="M595 250 V330"/>
+  <text class="m" x="602" y="268">*</text><text class="m" x="602" y="322">1</text>
+  <text class="r" x="628" y="297">organiza</text>
+
+  <!-- User 1 - * Registration (se apunta) -->
+  <path class="ln" d="M880 150 H810 V350 H740"/>
+  <text class="m" x="860" y="144">*</text><text class="m" x="746" y="344">1</text>
+  <text class="r" x="842" y="260">se apunta</text>
+
+  <!-- User 1 - * Post (publica) -->
+  <path class="ln" d="M740 410 H880"/>
+  <text class="m" x="746" y="404">1</text><text class="m" x="866" y="404">*</text>
+  <text class="r" x="810" y="428">publica</text>
+
+  <!-- Post 1 - * Comment -->
+  <path class="ln" d="M1025 430 V560"/>
+  <text class="m" x="1032" y="448">1</text><text class="m" x="1032" y="552">*</text>
+  <text class="r" x="1052" y="498">tiene</text>
+
+  <!-- User 1 - * Comment (escribe) -->
+  <path class="ln" d="M595 450 V630 H880"/>
+  <text class="m" x="602" y="468">1</text><text class="m" x="860" y="624">*</text>
+  <text class="r" x="740" y="622">escribe</text>
+
+  <!-- User 1 - * Rating (valora, user_id) -->
+  <path class="ln" d="M290 370 H450"/>
+  <text class="m" x="296" y="364">*</text><text class="m" x="436" y="364">1</text>
+  <text class="r" x="370" y="364">valora</text>
+
+  <!-- User 1 - * Rating (es valorado, rated_id) -->
+  <path class="ln" d="M290 420 H450"/>
+  <text class="m" x="296" y="414">*</text><text class="m" x="436" y="414">1</text>
+  <text class="r" x="370" y="414">es valorado</text>
+
+  <!-- Game 1 - * Rating -->
+  <path class="ln" d="M155 330 V225 H450"/>
+  <text class="m" x="161" y="320">*</text><text class="m" x="436" y="219">1</text>
+  <text class="r" x="300" y="219">sobre</text>
+
+  <!-- ===== Clases ===== -->
+  <!-- Venue -->
+  <rect class="bd" x="20" y="40" width="330" height="140"/>
+  <rect class="hd" x="20" y="40" width="330" height="30"/>
+  <text class="cn" x="185" y="61">Venue</text>
+  <text class="at" x="32" y="90">+ id: bigint</text>
+  <text class="at" x="32" y="110">+ name: string</text>
+  <text class="at" x="32" y="130">+ address: string</text>
+  <text class="at" x="32" y="150">+ city: string</text>
+  <text class="at" x="32" y="170">+ surface: enum(artificial, natural, indoor)</text>
+
+  <!-- Game -->
+  <rect class="bd" x="450" y="40" width="290" height="200"/>
+  <rect class="hd" x="450" y="40" width="290" height="30"/>
+  <text class="cn" x="595" y="61">Game</text>
+  <text class="at" x="462" y="90">+ id: bigint</text>
+  <text class="at" x="462" y="110">+ user_id: bigint (FK organizador)</text>
+  <text class="at" x="462" y="130">+ venue_id: bigint (FK)</text>
+  <text class="at" x="462" y="150">+ date: datetime</text>
+  <text class="at" x="462" y="170">+ max_players: int</text>
+  <text class="at" x="462" y="190">+ price: decimal(6,2)</text>
+  <text class="at" x="462" y="210">+ description: text [0..1]</text>
+  <text class="at" x="462" y="230">+ status: enum(open, full, cancelled)</text>
+
+  <!-- Registration -->
+  <rect class="bd" x="880" y="40" width="290" height="120"/>
+  <rect class="hd" x="880" y="40" width="290" height="30"/>
+  <text class="cn" x="1025" y="61">Registration</text>
+  <text class="at" x="892" y="90">+ id: bigint</text>
+  <text class="at" x="892" y="110">+ user_id: bigint (FK)</text>
+  <text class="at" x="892" y="130">+ game_id: bigint (FK)</text>
+  <text class="at" x="892" y="150">+ status: enum(confirmed, waitlist)</text>
+
+  <!-- User -->
+  <rect class="bd" x="450" y="330" width="290" height="120"/>
+  <rect class="hd" x="450" y="330" width="290" height="30"/>
+  <text class="cn" x="595" y="351">User</text>
+  <text class="at" x="462" y="380">+ id: bigint</text>
+  <text class="at" x="462" y="400">+ name: string</text>
+  <text class="at" x="462" y="420">+ email: string (unico)</text>
+  <text class="at" x="462" y="440">+ password: string (hash)</text>
+
+  <!-- Rating -->
+  <rect class="bd" x="20" y="330" width="270" height="160"/>
+  <rect class="hd" x="20" y="330" width="270" height="30"/>
+  <text class="cn" x="155" y="351">Rating</text>
+  <text class="at" x="32" y="380">+ id: bigint</text>
+  <text class="at" x="32" y="400">+ user_id: bigint (FK valora)</text>
+  <text class="at" x="32" y="420">+ rated_id: bigint (FK valorado)</text>
+  <text class="at" x="32" y="440">+ game_id: bigint (FK)</text>
+  <text class="at" x="32" y="460">+ score: int (1 a 5)</text>
+  <text class="at" x="32" y="480">+ comment: string [0..1]</text>
+
+  <!-- Post -->
+  <rect class="bd" x="880" y="330" width="290" height="100"/>
+  <rect class="hd" x="880" y="330" width="290" height="30"/>
+  <text class="cn" x="1025" y="351">Post</text>
+  <text class="at" x="892" y="380">+ id: bigint</text>
+  <text class="at" x="892" y="400">+ user_id: bigint (FK)</text>
+  <text class="at" x="892" y="420">+ content: text</text>
+
+  <!-- Comment -->
+  <rect class="bd" x="880" y="560" width="290" height="120"/>
+  <rect class="hd" x="880" y="560" width="290" height="30"/>
+  <text class="cn" x="1025" y="581">Comment</text>
+  <text class="at" x="892" y="610">+ id: bigint</text>
+  <text class="at" x="892" y="630">+ user_id: bigint (FK)</text>
+  <text class="at" x="892" y="650">+ post_id: bigint (FK)</text>
+  <text class="at" x="892" y="670">+ content: text</text>
+
+  <!-- Leyenda -->
+  <text class="lg" x="20" y="716">FK = clave foranea. [0..1] = campo opcional (admite nulo). Todas las clases tienen ademas created_at y updated_at (timestamp).</text>
+  <text class="lg" x="20" y="736">Las asociaciones son bidireccionales (hasMany / belongsTo en Eloquent). Registration es unica por (user_id, game_id). Al borrar un registro padre se borran sus hijos (cascada).</text>
+</svg>
